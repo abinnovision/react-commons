@@ -810,7 +810,7 @@ __metadata:
     cpx2: "npm:^8.0.0"
     eslint: "npm:^9.39.4"
     graphql-sse: "npm:^2.6.0"
-    happy-dom: "npm:^20.8.6"
+    happy-dom: "npm:^20.8.9"
     lucide-react: "npm:^1.0.1"
     prettier: "npm:^3.8.1"
     tailwind-merge: "npm:^3.5.0"
@@ -3339,9 +3339,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^20.8.6":
-  version: 20.8.6
-  resolution: "happy-dom@npm:20.8.6"
+"happy-dom@npm:^20.8.9":
+  version: 20.8.9
+  resolution: "happy-dom@npm:20.8.9"
   dependencies:
     "@types/node": "npm:>=20.0.0"
     "@types/whatwg-mimetype": "npm:^3.0.2"
@@ -3349,7 +3349,7 @@ __metadata:
     entities: "npm:^7.0.1"
     whatwg-mimetype: "npm:^3.0.0"
     ws: "npm:^8.18.3"
-  checksum: 10/b6c52c9f913c02f9669878ed7513057043a8789e3f39ba63c8306347370ee8fcc96429961a1a3912c43f42a76c40a7a0b97a15f6ec31956f2c08c709cc8d83bc
+  checksum: 10/81fabd8c630c2165eedd57b72f38b58e8891ff2ff543302c5bdf88860fc3b45b16decd27dabfc72739af6a927d711b04008c61b7e8090893da1fe5feba2dc80e
   languageName: node
   linkType: hard
 
