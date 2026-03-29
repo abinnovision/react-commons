@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  pull_request_target:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  merge_group:
+    types:
+      - checks_requested
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event.pull_request.number || github.event.merge_group.id || 'main' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request_target' || github.event_name == 'merge_group' }}
+
+jobs:
+  build-stack:
+    name: CI/CD Pipeline
+    uses: abinnovision/actions/.github/workflows/workflow.yaml@polyglot-monorepo-stack-v1
+    secrets:
+      GH_APP_IDENTIFICATION_RELEASER: ${{ secrets.GH_APP_IDENTIFICATION_RELEASER }}
+    with:
+      prerelease-channel: "beta"
+
+      # Test configuration
+      test-types: "unit"
+
+      # Package publishing (disabled by default)
+      enable-package-publishing: true
+
+      # GCP Artifact Registry configuration
+      enable-apps-registry-gcpar: false
+
+      run-build-before-check: true

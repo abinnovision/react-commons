@@ -1,0 +1,11 @@
+{
+	"$schema": "https://storage.googleapis.com/abi-hk-schemas/repository-meta.json",
+	"options": {
+		"artifactRegistry": {
+			"docker": false
+		},
+		"githubApps": {
+			"releaser": true
+		}
+	}
+}

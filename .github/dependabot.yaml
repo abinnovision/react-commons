@@ -1,0 +1,78 @@
+# NOTE: This configuration provides sensible defaults for most projects.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    versioning-strategy: increase
+    open-pull-requests-limit: 15
+    schedule:
+      interval: weekly
+      day: monday
+      time: "13:00"
+      timezone: Europe/Berlin
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "fix(deps)"
+      prefix-development: "build(deps/dev)"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+
+    groups:
+      formatting-linting-related:
+        patterns:
+          - "eslint"
+          - "prettier"
+          - "eslint-plugin-*"
+          - "eslint-config-*"
+          - "@typescript-eslint/*"
+          - "@types/eslint"
+          - "@types/prettier"
+          - "@abinnovision/eslint*"
+          - "@abinnovision/prettier*"
+      git-hooks-related:
+        patterns:
+          - "@commitlint/*"
+          - "husky"
+          - "lint-staged"
+      graphql-related:
+        patterns:
+          - "graphql"
+          - "graphql-*"
+          - "@graphql-codegen/*"
+          - "@graphql-yoga/*"
+          - "@apollo/*"
+      react-related:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      tailwind-related:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "tailwind-merge"
+          - "tw-animate-css"
+      testing-library-related:
+        patterns:
+          - "@testing-library/*"
+      typescript-related:
+        patterns:
+          - "typescript"
+          - "@tsconfig/*"
+      urql-related:
+        patterns:
+          - "urql"
+          - "@urql/*"
+      vite-related:
+        patterns:
+          - "vite"
+          - "@vitejs/*"
+          - "vite-*"
+      vitest-related:
+        patterns:
+          - "vitest"
+          - "vitest-*"
+          - "@vitest/*"
