@@ -1,0 +1,156 @@
+---
+title: API Reference
+description: Complete API reference for react-overlay-stack.
+---
+
+## `createOverlaySystem()`
+
+Factory function that creates an independent overlay system.
+
+```ts
+import { createOverlaySystem } from "react-overlay-stack";
+
+const { useOverlay, OverlayProvider } = createOverlaySystem();
+```
+
+**Returns:**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `useOverlay` | `(overlay: OverlayDefinition) => UseOverlayReturn` | Hook to control an overlay |
+| `OverlayProvider` | `FC<{ children: ReactNode; overlays?: OverlayDefinition[] }>` | Provider component that renders the overlay stack |
+
+### `OverlayProvider`
+
+Wrap your component tree with `OverlayProvider` to render overlays. It accepts:
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `children` | `ReactNode` | Your application content |
+| `overlays` | `OverlayDefinition[]` | Optional array of overlays to register eagerly (instead of via `useOverlay`) |
+
+### `useOverlay(overlay)`
+
+Hook that registers an overlay and returns controls.
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `overlay` | `OverlayDefinition<TProps, TResult>` | The overlay definition created by `defineOverlay()` |
+
+**Returns: `UseOverlayReturn<T>`**
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `open` | `(props: TProps, onClose?: (result?: TResult) => void) => string` | Open the overlay. Returns the instance ID. If `TProps` is `never`, the first argument is omitted. |
+| `close` | `(id: string, result?: TResult) => void` | Close a specific overlay instance by ID |
+| `closeAll` | `() => void` | Close all open overlays in this system |
+
+---
+
+## `defineOverlay()`
+
+Creates a typed overlay definition.
+
+```ts
+import { defineOverlay } from "react-overlay-stack";
+
+const MyOverlay = defineOverlay<TProps, TResult>(component);
+```
+
+**Type Parameters:**
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `TProps` | `never` | Props passed to the overlay (excluding `controller`) |
+| `TResult` | `undefined` | Type of the value passed to `controller.close(result)` |
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `component` | `OverlayComponent<TProps, TResult>` | The React component to render |
+
+**Returns:** `OverlayDefinition<TProps, TResult>`
+
+The component receives all `TProps` plus a `controller` prop:
+
+```ts
+interface OverlayController<TResult> {
+  readonly close: (result?: TResult) => void;
+}
+```
+
+---
+
+## `useOverlayContext()`
+
+Hook to access overlay metadata from within an overlay component.
+
+```ts
+import { useOverlayContext } from "react-overlay-stack";
+
+const MyOverlay = defineOverlay(() => {
+  const { isOpen, stackIndex, isTopmost, onAnimationEnd } = useOverlayContext();
+  // ...
+});
+```
+
+**Returns: `OverlayMetadata`**
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `string` | Unique instance ID |
+| `stackIndex` | `number` | Zero-based position in the overlay stack |
+| `isTopmost` | `boolean` | Whether this overlay is the topmost in the stack |
+| `isOpen` | `boolean` | `true` when visible, `false` when closing (use for exit animations) |
+| `onAnimationEnd` | `() => void` | Call this when exit animation completes to remove the overlay from the DOM |
+
+---
+
+## Types
+
+### `OverlayDefinition<TProps, TResult>`
+
+Opaque type returned by `defineOverlay()`. Carries phantom types for compile-time safety.
+
+### `OverlayProps<T>`
+
+Utility type to extract props from an overlay definition:
+
+```ts
+type Props = OverlayProps<typeof MyOverlay>; // { message: string }
+```
+
+### `OverlayResult<T>`
+
+Utility type to extract the result type from an overlay definition:
+
+```ts
+type Result = OverlayResult<typeof ConfirmDialog>; // boolean
+```
+
+### `OverlayComponent<TProps, TResult>`
+
+The component type that overlays must satisfy. When `TProps` is `never`, only `controller` is received. Otherwise, the component receives `TProps & { controller: OverlayController<TResult> }`.
+
+### `OverlayController<TResult>`
+
+```ts
+interface OverlayController<TResult> {
+  readonly close: (result?: TResult) => void;
+}
+```
+
+### `OverlayMetadata`
+
+```ts
+interface OverlayMetadata {
+  readonly id: string;
+  readonly stackIndex: number;
+  readonly isTopmost: boolean;
+  readonly isOpen: boolean;
+  readonly onAnimationEnd: () => void;
+}
+```
