@@ -1,9 +1,0 @@
-{
-	"extends": ["@internal/tsconfig/tsconfig.build.json", "./tsconfig.json"],
-	"compilerOptions": {
-		"outDir": "./dist",
-		"noEmit": false
-	},
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"]
-}

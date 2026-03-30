@@ -1,0 +1,47 @@
+{
+	"name": "@internal/examples",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "storybook dev -p 6006",
+		"start:dev": "storybook dev -p 6006",
+		"format:check": "prettier --check '{{src,.storybook}/**/*,*}.{{t,j}s{,x},json{,5},md,y{,a}ml}'",
+		"format:fix": "prettier --write '{{src,.storybook}/**/*,*}.{{t,j}s{,x},json{,5},md,y{,a}ml}'",
+		"lint:check": "eslint '{{src,.storybook}/**/*,*}.{t,j}s{,x}'",
+		"lint:fix": "eslint '{{src,.storybook}/**/*,*}.{t,j}s{,x}' --fix",
+		"typecheck": "tsc --noEmit"
+	},
+	"lint-staged": {
+		"{{src,.storybook}/**/*,*}.{{t,j}s{,x},json{,5},md,y{,a}ml}": [
+			"prettier --write"
+		],
+		"{{src,.storybook}/**/*,*}.{t,j}s{,x}": [
+			"eslint --fix"
+		]
+	},
+	"prettier": "@abinnovision/prettier-config",
+	"dependencies": {
+		"@radix-ui/react-dialog": "^1.1.15",
+		"@storybook/react": "^10.3.3",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"react-overlay-stack": "workspace:^",
+		"vaul": "^1.1.2"
+	},
+	"devDependencies": {
+		"@abinnovision/eslint-config-base": "^3.2.2",
+		"@abinnovision/eslint-config-react": "^3.1.0",
+		"@abinnovision/prettier-config": "^2.1.5",
+		"@storybook/react-vite": "^10.3.3",
+		"@tailwindcss/vite": "^4.2.2",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"eslint": "^9.39.4",
+		"prettier": "^3.8.1",
+		"storybook": "^10.3.3",
+		"tailwindcss": "^4.2.2",
+		"typescript": "^5.9.3",
+		"vite": "^8.0.3"
+	}
+}

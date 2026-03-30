@@ -1,5 +1,0 @@
-{
-	"extends": ["./tsconfig.json", "@internal/tsconfig/tsconfig.build.json"],
-	"include": ["src/**/*"],
-	"exclude": ["src/**/*.spec.ts"]
-}
