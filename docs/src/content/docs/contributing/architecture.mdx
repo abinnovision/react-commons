@@ -1,0 +1,46 @@
+---
+title: Architecture
+description: Monorepo structure, build system, and CI/CD overview.
+---
+
+## Monorepo Structure
+
+```
+react-commons/
+├── packages/           # Published npm packages
+│   └── react-overlay-stack/
+├── examples/           # Storybook examples app (private)
+├── docs/               # Documentation site (private)
+└── tools/              # Shared scripts
+```
+
+**Tooling:**
+- **Yarn 4** workspaces for package management
+- **Turbo** for task orchestration and caching
+- **tsdown** (rolldown-based) for building libraries — dual CJS/ESM output
+- **TypeScript** (`tsc --noEmit`) for type checking only
+- **Vitest** for unit testing with `happy-dom` environment
+
+## Build System
+
+Each package has a `tsdown.config.ts` that produces dual CJS/ESM output with `unbundle: true`. TypeScript is used only for type checking, not compilation.
+
+```bash
+yarn build           # Build all packages via Turbo
+yarn turbo build --filter=react-overlay-stack  # Build one package
+```
+
+## Testing
+
+Unit tests only. Each package uses Vitest with `defineProject` and a naming convention (`react-overlay-stack#unit`). Tests live alongside source files as `*.spec.ts(x)`.
+
+```bash
+yarn test-unit       # Run all tests with coverage
+```
+
+## CI/CD
+
+- **GitHub Actions** with the `abinnovision/actions` polyglot monorepo stack
+- **Pre-commit hooks** via Husky: lint-staged (ESLint + Prettier)
+- **Commit-msg hook**: commitlint enforces conventional commits
+- **Publishing**: Packages publish to npm on release. Prerelease channel: `beta`

@@ -1,0 +1,28 @@
+---
+title: Contributing
+description: How to contribute to react-commons.
+---
+
+Contributions are welcome! This guide covers everything you need to get started.
+
+## Quick Links
+
+- [Development Setup](/contributing/development-setup/) — Clone, install, build, and test
+- [Code Style](/contributing/code-style/) — Conventions and formatting rules
+- [Architecture](/contributing/architecture/) — Monorepo structure and build system
+
+## Commit Convention
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/). Commit messages are validated by commitlint via a git hook.
+
+```
+feat(overlay-stack): add closeAll method
+fix(docs): correct API reference link
+chore: update dependencies
+```
+
+## Pull Requests
+
+- All PRs target `main`
+- CI runs build, lint, format checks, and unit tests
+- Commits must follow the conventional commit format

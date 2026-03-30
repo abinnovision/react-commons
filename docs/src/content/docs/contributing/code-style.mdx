@@ -1,0 +1,63 @@
+---
+title: Code Style
+description: Code conventions and formatting rules for react-commons.
+---
+
+## General Rules
+
+- **Arrow functions everywhere** — no `function` declarations
+
+  ```ts
+  // Good
+  const add = (a: number, b: number) => a + b;
+
+  // Bad
+  function add(a: number, b: number) {
+    return a + b;
+  }
+  ```
+
+- **Named exports only** — no default exports
+
+  ```ts
+  // Good
+  export const MyComponent: FC = () => { ... };
+
+  // Bad
+  export default function MyComponent() { ... }
+  ```
+
+- **Component typing** — use `FC<Props>` with destructured props
+
+  ```tsx
+  interface ButtonProps {
+    label: string;
+    onClick: () => void;
+  }
+
+  const Button: FC<ButtonProps> = ({ label, onClick }) => (
+    <button onClick={onClick}>{label}</button>
+  );
+  ```
+
+## Formatting
+
+- **Prettier** handles all formatting (via `@abinnovision/prettier-config`)
+- **ESLint** handles linting (via `@abinnovision/eslint-config-base` and `eslint-config-react`)
+- Both run automatically on staged files via a pre-commit hook
+
+Run manually:
+
+```bash
+yarn fix    # Auto-fix everything
+yarn check  # Check without fixing
+```
+
+## TypeScript
+
+Strict mode is enabled with additional strictness flags:
+
+- `exactOptionalPropertyTypes`
+- `noUncheckedIndexedAccess`
+- `noPropertyAccessFromIndexSignature`
+- `nodenext` module resolution
