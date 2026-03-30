@@ -1,0 +1,35 @@
+{
+	"name": "@internal/docs",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "astro build",
+		"dev": "astro dev",
+		"format:check": "prettier --check '{src,public}/**/*.{ts,tsx,mdx,css,json}'",
+		"format:fix": "prettier --write '{src,public}/**/*.{ts,tsx,mdx,css,json}'",
+		"preview": "astro preview",
+		"start:dev": "astro dev"
+	},
+	"prettier": "@abinnovision/prettier-config",
+	"dependencies": {
+		"@astrojs/react": "^4.3.0",
+		"@astrojs/starlight": "^0.34.0",
+		"@astrojs/tailwind": "^6.0.2",
+		"@tailwindcss/vite": "^4.2.2",
+		"astro": "^5.10.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
+		"react-overlay-stack": "workspace:^",
+		"sharp": "^0.34.3",
+		"tailwindcss": "^4.2.2",
+		"zustand": "^5.0.12"
+	},
+	"devDependencies": {
+		"@abinnovision/prettier-config": "^2.1.5",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"prettier": "^3.8.1",
+		"typescript": "^5.9.3"
+	}
+}

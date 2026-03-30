@@ -10,7 +10,8 @@
 	},
 	"workspaces": [
 		"packages/*",
-		"examples"
+		"examples",
+		"docs"
 	],
 	"scripts": {
 		"build": "yarn turbo run build",
