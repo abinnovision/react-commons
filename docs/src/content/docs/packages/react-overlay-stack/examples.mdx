@@ -1,0 +1,21 @@
+---
+title: Examples
+description: Live interactive examples of react-overlay-stack.
+---
+
+import { BasicOverlayDemo } from "../../../../../components/BasicOverlayDemo";
+import { StackingDemo } from "../../../../../components/StackingDemo";
+
+## Basic Overlay
+
+A simple overlay with fade/scale animations, displaying metadata (`stackIndex`, `isTopmost`, `isOpen`). Returns a string result on close.
+
+<BasicOverlayDemo client:load />
+
+---
+
+## Overlay Stacking
+
+Demonstrates multiple overlays stacking on top of each other (up to 5 layers). Each layer shows its position in the stack.
+
+<StackingDemo client:load />
