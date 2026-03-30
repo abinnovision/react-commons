@@ -4,6 +4,9 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
+	legacy: {
+		collections: true,
+	},
 	integrations: [
 		starlight({
 			title: "React Commons",
@@ -54,5 +57,10 @@ export default defineConfig({
 	],
 	vite: {
 		plugins: [tailwindcss()],
+		resolve: {
+			alias: {
+				"@components": "/src/components",
+			},
+		},
 	},
 });

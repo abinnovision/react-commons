@@ -22,6 +22,7 @@
 		"react-overlay-stack": "workspace:^",
 		"sharp": "^0.34.3",
 		"tailwindcss": "^4.2.2",
+		"zod": "^3.25.76",
 		"zustand": "^5.0.12"
 	},
 	"devDependencies": {

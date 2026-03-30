@@ -1679,6 +1679,7 @@ __metadata:
     sharp: "npm:^0.34.3"
     tailwindcss: "npm:^4.2.2"
     typescript: "npm:^5.9.3"
+    zod: "npm:^3.25.76"
     zustand: "npm:^5.0.12"
   languageName: unknown
   linkType: soft
