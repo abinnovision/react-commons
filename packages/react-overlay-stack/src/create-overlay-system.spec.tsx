@@ -331,6 +331,163 @@ describe("createOverlaySystem", () => {
 		expect(screen.getByTestId("base").textContent).toBe("eager");
 	});
 
+	it("onOpenChange(false) closes the overlay without a result", () => {
+		const { useOverlay, OverlayProvider } = createOverlaySystem();
+		const onClose = vi.fn();
+
+		let capturedMeta: ReturnType<typeof useOverlayContext> | undefined;
+
+		const OpenChangeComponent = ({
+			controller,
+		}: {
+			controller: OverlayController<boolean>;
+		}) => {
+			void controller;
+			const meta = useOverlayContext();
+			capturedMeta = meta;
+
+			return <div data-testid="oc-open">{String(meta.isOpen)}</div>;
+		};
+
+		const OpenChangeOverlay = defineOverlay<never, boolean>(
+			OpenChangeComponent,
+		);
+
+		const Consumer = () => {
+			const overlay = useOverlay(OpenChangeOverlay);
+
+			return (
+				<button data-testid="open-oc" onClick={() => overlay.open(onClose)}>
+					Open
+				</button>
+			);
+		};
+
+		render(
+			<OverlayProvider>
+				<Consumer />
+			</OverlayProvider>,
+		);
+
+		act(() => {
+			screen.getByTestId("open-oc").click();
+		});
+		expect(screen.getByTestId("oc-open").textContent).toBe("true");
+
+		// Simulate UI lib firing onOpenChange(false)
+		act(() => {
+			capturedMeta?.onOpenChange(false);
+		});
+		expect(screen.getByTestId("oc-open").textContent).toBe("false");
+
+		// Complete animation lifecycle
+		act(() => {
+			capturedMeta?.onAnimationEnd();
+		});
+		expect(onClose).toHaveBeenCalledWith(undefined);
+	});
+
+	it("onOpenChange(true) is a no-op", () => {
+		const { useOverlay, OverlayProvider } = createOverlaySystem();
+
+		let capturedMeta: ReturnType<typeof useOverlayContext> | undefined;
+
+		const NoopComponent = ({
+			controller,
+		}: {
+			controller: OverlayController<undefined>;
+		}) => {
+			void controller;
+			const meta = useOverlayContext();
+			capturedMeta = meta;
+
+			return <div data-testid="noop-open">{String(meta.isOpen)}</div>;
+		};
+
+		const NoopOverlay = defineOverlay(NoopComponent);
+
+		const Consumer = () => {
+			const overlay = useOverlay(NoopOverlay);
+
+			return (
+				<button data-testid="open-noop" onClick={() => overlay.open()}>
+					Open
+				</button>
+			);
+		};
+
+		render(
+			<OverlayProvider>
+				<Consumer />
+			</OverlayProvider>,
+		);
+
+		act(() => {
+			screen.getByTestId("open-noop").click();
+		});
+
+		// onOpenChange(true) should not affect state
+		act(() => {
+			capturedMeta?.onOpenChange(true);
+		});
+		expect(screen.getByTestId("noop-open").textContent).toBe("true");
+	});
+
+	it("onOpenChange(false) is idempotent when already closing", () => {
+		const { useOverlay, OverlayProvider } = createOverlaySystem();
+
+		let capturedMeta: ReturnType<typeof useOverlayContext> | undefined;
+		let capturedController: OverlayController<boolean> | undefined;
+
+		const IdempotentComponent = ({
+			controller,
+		}: {
+			controller: OverlayController<boolean>;
+		}) => {
+			capturedController = controller;
+			const meta = useOverlayContext();
+			capturedMeta = meta;
+
+			return <div data-testid="idem-open">{String(meta.isOpen)}</div>;
+		};
+
+		const IdempotentOverlay = defineOverlay<never, boolean>(
+			IdempotentComponent,
+		);
+
+		const Consumer = () => {
+			const overlay = useOverlay(IdempotentOverlay);
+
+			return (
+				<button data-testid="open-idem" onClick={() => overlay.open()}>
+					Open
+				</button>
+			);
+		};
+
+		render(
+			<OverlayProvider>
+				<Consumer />
+			</OverlayProvider>,
+		);
+
+		act(() => {
+			screen.getByTestId("open-idem").click();
+		});
+
+		// Close with a result first
+		act(() => {
+			capturedController?.close(true);
+		});
+		expect(screen.getByTestId("idem-open").textContent).toBe("false");
+
+		// Calling onOpenChange(false) again should not throw or change state
+		act(() => {
+			capturedMeta?.onOpenChange(false);
+		});
+		expect(screen.getByTestId("idem-open").textContent).toBe("false");
+	});
+
 	it("useOverlayContext throws outside provider", () => {
 		const BadComponent = () => {
 			useOverlayContext();

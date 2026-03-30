@@ -137,6 +137,11 @@ export const createOverlaySystem = () => {
 				onAnimationEnd: () => {
 					store.getState().removeFromStack(entry.id);
 				},
+				onOpenChange: (open: boolean) => {
+					if (!open) {
+						store.getState().close(entry.id);
+					}
+				},
 			};
 
 			return createElement(

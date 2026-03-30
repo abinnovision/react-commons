@@ -47,12 +47,6 @@ export type OverlayComponent<TProps = never, TResult = unknown> = [
 
 /**
  * Universal metadata exposed to UI wrapper components via `useOverlayContext()`.
- *
- * Does NOT include dialog-specific fields like `onOpenChange`.
- * UI wrappers wire those themselves:
- * ```
- * onOpenChange={(open) => { if (!open) controller.close(); }}
- * ```
  */
 export interface OverlayMetadata {
 	readonly id: string;
@@ -60,6 +54,18 @@ export interface OverlayMetadata {
 	readonly isTopmost: boolean;
 	readonly isOpen: boolean;
 	readonly onAnimationEnd: () => void;
+
+	/**
+	 * - `onOpenChange(false)` closes the overlay without a result (user dismissal).
+	 * - `onOpenChange(true)` is a no-op — overlays are opened via `overlay.open()`.
+	 * - Idempotent: safe to call multiple times while already closing.
+	 *
+	 * ```tsx
+	 * <Dialog open={meta.isOpen} onOpenChange={meta.onOpenChange} />
+	 * <Drawer.Root open={meta.isOpen} onOpenChange={meta.onOpenChange} />
+	 * ```
+	 */
+	readonly onOpenChange: (open: boolean) => void;
 }
 
 /** A single entry in the internal overlay stack. */
