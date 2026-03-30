@@ -10,11 +10,11 @@ When multiple overlays are open at the same time, they form a stack. Each overla
 
 Every overlay rendered by `OverlayProvider` receives metadata via `useOverlayContext()`:
 
-| Property | Description |
-|----------|-------------|
+| Property     | Description                                                    |
+| ------------ | -------------------------------------------------------------- |
 | `stackIndex` | Zero-based position. First overlay is `0`, second is `1`, etc. |
-| `isTopmost` | `true` only for the overlay at the top of the stack |
-| `isOpen` | `true` when visible, `false` when animating out |
+| `isTopmost`  | `true` only for the overlay at the top of the stack            |
+| `isOpen`     | `true` when visible, `false` when animating out                |
 
 ## Z-Index Management
 
@@ -55,19 +55,19 @@ When `close()` is called, the overlay is **not** immediately removed from the DO
 
 ```tsx
 const MyOverlay = defineOverlay(({ controller }) => {
-  const { isOpen, onAnimationEnd } = useOverlayContext();
+	const { isOpen, onAnimationEnd } = useOverlayContext();
 
-  return (
-    <div
-      className="transition-opacity duration-200"
-      style={{ opacity: isOpen ? 1 : 0 }}
-      onTransitionEnd={() => {
-        if (!isOpen) onAnimationEnd();
-      }}
-    >
-      <button onClick={() => controller.close()}>Close</button>
-    </div>
-  );
+	return (
+		<div
+			className="transition-opacity duration-200"
+			style={{ opacity: isOpen ? 1 : 0 }}
+			onTransitionEnd={() => {
+				if (!isOpen) onAnimationEnd();
+			}}
+		>
+			<button onClick={() => controller.close()}>Close</button>
+		</div>
+	);
 });
 ```
 
@@ -77,12 +77,12 @@ If you don't need exit animations, call `onAnimationEnd()` immediately:
 import { useEffect } from "react";
 
 const SimpleOverlay = defineOverlay(({ controller }) => {
-  const { isOpen, onAnimationEnd } = useOverlayContext();
+	const { isOpen, onAnimationEnd } = useOverlayContext();
 
-  useEffect(() => {
-    if (!isOpen) onAnimationEnd();
-  }, [isOpen, onAnimationEnd]);
+	useEffect(() => {
+		if (!isOpen) onAnimationEnd();
+	}, [isOpen, onAnimationEnd]);
 
-  return <div>...</div>;
+	return <div>...</div>;
 });
 ```

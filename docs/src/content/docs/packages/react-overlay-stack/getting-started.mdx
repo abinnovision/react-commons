@@ -37,9 +37,9 @@ Wrap your app (or a subtree) with `OverlayProvider`:
 import { OverlayProvider } from "./overlay-system";
 
 const App = () => (
-  <OverlayProvider>
-    <YourApp />
-  </OverlayProvider>
+	<OverlayProvider>
+		<YourApp />
+	</OverlayProvider>
 );
 ```
 
@@ -51,12 +51,12 @@ Use `defineOverlay()` to create a typed overlay component. The first generic is 
 import { defineOverlay } from "react-overlay-stack";
 
 const AlertDialog = defineOverlay<{ message: string }>(
-  ({ message, controller }) => (
-    <dialog open>
-      <p>{message}</p>
-      <button onClick={() => controller.close()}>OK</button>
-    </dialog>
-  ),
+	({ message, controller }) => (
+		<dialog open>
+			<p>{message}</p>
+			<button onClick={() => controller.close()}>OK</button>
+		</dialog>
+	),
 );
 ```
 
@@ -68,13 +68,13 @@ Use the `useOverlay` hook to get an `open` function:
 import { useOverlay } from "./overlay-system";
 
 const Page = () => {
-  const alert = useOverlay(AlertDialog);
+	const alert = useOverlay(AlertDialog);
 
-  return (
-    <button onClick={() => alert.open({ message: "Hello!" })}>
-      Show Alert
-    </button>
-  );
+	return (
+		<button onClick={() => alert.open({ message: "Hello!" })}>
+			Show Alert
+		</button>
+	);
 };
 ```
 
@@ -84,20 +84,20 @@ Pass a callback as the second argument to `open`, or use a typed result:
 
 ```tsx
 const ConfirmDialog = defineOverlay<{ message: string }, boolean>(
-  ({ message, controller }) => (
-    <dialog open>
-      <p>{message}</p>
-      <button onClick={() => controller.close(true)}>Yes</button>
-      <button onClick={() => controller.close(false)}>No</button>
-    </dialog>
-  ),
+	({ message, controller }) => (
+		<dialog open>
+			<p>{message}</p>
+			<button onClick={() => controller.close(true)}>Yes</button>
+			<button onClick={() => controller.close(false)}>No</button>
+		</dialog>
+	),
 );
 
 // In your component:
 const confirm = useOverlay(ConfirmDialog);
 confirm.open({ message: "Delete item?" }, (result) => {
-  if (result) {
-    deleteItem();
-  }
+	if (result) {
+		deleteItem();
+	}
 });
 ```

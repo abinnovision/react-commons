@@ -14,38 +14,39 @@ import { useOverlayContext } from "react-overlay-stack";
 import type { FC, ReactNode } from "react";
 
 interface AppDrawerProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 export const AppDrawer: FC<AppDrawerProps> = ({ children }) => {
-  const { isOpen, stackIndex, onAnimationEnd } = useOverlayContext();
+	const { isOpen, stackIndex, onAnimationEnd } = useOverlayContext();
 
-  return (
-    <Drawer.Root
-      open={isOpen}
-      onAnimationEnd={(open) => {
-        if (!open) onAnimationEnd();
-      }}
-    >
-      <Drawer.Portal>
-        <Drawer.Overlay
-          className="fixed inset-0 bg-black/40"
-          style={{ zIndex: 50 + stackIndex * 10 }}
-        />
-        <Drawer.Content
-          className="fixed bottom-0 left-0 right-0 rounded-t-lg bg-white"
-          style={{ zIndex: 50 + stackIndex * 10 + 1 }}
-        >
-          <div className="mx-auto mt-2 h-1 w-12 rounded-full bg-gray-300" />
-          <div className="p-4">{children}</div>
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer.Root>
-  );
+	return (
+		<Drawer.Root
+			open={isOpen}
+			onAnimationEnd={(open) => {
+				if (!open) onAnimationEnd();
+			}}
+		>
+			<Drawer.Portal>
+				<Drawer.Overlay
+					className="fixed inset-0 bg-black/40"
+					style={{ zIndex: 50 + stackIndex * 10 }}
+				/>
+				<Drawer.Content
+					className="fixed bottom-0 left-0 right-0 rounded-t-lg bg-white"
+					style={{ zIndex: 50 + stackIndex * 10 + 1 }}
+				>
+					<div className="mx-auto mt-2 h-1 w-12 rounded-full bg-gray-300" />
+					<div className="p-4">{children}</div>
+				</Drawer.Content>
+			</Drawer.Portal>
+		</Drawer.Root>
+	);
 };
 ```
 
 **Key points:**
+
 - `open` is bound to `isOpen` from context — the overlay system drives visibility.
 - Vaul's `onAnimationEnd` callback fires after the close animation. Call `onAnimationEnd()` from context to remove the overlay from the DOM.
 - Z-index stacking follows the same pattern as dialogs.
@@ -57,13 +58,13 @@ import { defineOverlay } from "react-overlay-stack";
 import { AppDrawer } from "./AppDrawer";
 
 const InfoDrawer = defineOverlay<{ title: string; content: string }>(
-  ({ title, content, controller }) => (
-    <AppDrawer>
-      <h2 className="text-lg font-semibold">{title}</h2>
-      <p className="my-4 text-gray-600">{content}</p>
-      <button onClick={() => controller.close()}>Close</button>
-    </AppDrawer>
-  ),
+	({ title, content, controller }) => (
+		<AppDrawer>
+			<h2 className="text-lg font-semibold">{title}</h2>
+			<p className="my-4 text-gray-600">{content}</p>
+			<button onClick={() => controller.close()}>Close</button>
+		</AppDrawer>
+	),
 );
 ```
 
@@ -71,16 +72,16 @@ const InfoDrawer = defineOverlay<{ title: string; content: string }>(
 
 ```tsx
 const Page = () => {
-  const drawer = useOverlay(InfoDrawer);
+	const drawer = useOverlay(InfoDrawer);
 
-  return (
-    <button
-      onClick={() =>
-        drawer.open({ title: "Details", content: "Some information here." })
-      }
-    >
-      Show Drawer
-    </button>
-  );
+	return (
+		<button
+			onClick={() =>
+				drawer.open({ title: "Details", content: "Some information here." })
+			}
+		>
+			Show Drawer
+		</button>
+	);
 };
 ```
