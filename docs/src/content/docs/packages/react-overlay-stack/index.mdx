@@ -1,0 +1,52 @@
+---
+title: react-overlay-stack
+description: Type-safe, unstyled overlay manager for React 19 with animation lifecycle and stacking support.
+---
+
+A type-safe, unstyled overlay manager for React 19. Built on [Zustand](https://github.com/pmndrs/zustand) for state management.
+
+## Features
+
+- **Type-safe** — Full TypeScript support with inferred props and result types via phantom types
+- **Unstyled** — Bring your own UI components (Radix, Vaul, custom, etc.)
+- **Stacking** — Multiple overlays stack naturally with metadata (`stackIndex`, `isTopmost`)
+- **Animation lifecycle** — Built-in `isOpen` and `onAnimationEnd` for enter/exit transitions
+- **Independent systems** — Create isolated overlay systems with `createOverlaySystem()`
+
+## Quick Example
+
+```tsx
+import { createOverlaySystem, defineOverlay } from "react-overlay-stack";
+
+const { useOverlay, OverlayProvider } = createOverlaySystem();
+
+const ConfirmDialog = defineOverlay<{ message: string }, boolean>(
+  ({ message, controller }) => (
+    <dialog open>
+      <p>{message}</p>
+      <button onClick={() => controller.close(true)}>OK</button>
+      <button onClick={() => controller.close(false)}>Cancel</button>
+    </dialog>
+  ),
+);
+
+const App = () => {
+  const confirm = useOverlay(ConfirmDialog);
+
+  return (
+    <OverlayProvider>
+      <button onClick={() => confirm.open({ message: "Are you sure?" })}>
+        Open
+      </button>
+    </OverlayProvider>
+  );
+};
+```
+
+## Core API
+
+| Export | Description |
+|--------|-------------|
+| [`createOverlaySystem()`](/packages/react-overlay-stack/api-reference/#createoverlaysystem) | Factory that returns `useOverlay` hook and `OverlayProvider` component |
+| [`defineOverlay()`](/packages/react-overlay-stack/api-reference/#defineoverlay) | Define a typed overlay component |
+| [`useOverlayContext()`](/packages/react-overlay-stack/api-reference/#useoverlaycontext) | Access overlay metadata inside overlay components |

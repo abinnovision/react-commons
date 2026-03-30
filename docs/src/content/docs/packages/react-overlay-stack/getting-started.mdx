@@ -1,0 +1,102 @@
+---
+title: Getting Started
+description: Install and set up react-overlay-stack in your project.
+---
+
+## Installation
+
+```bash
+npm install react-overlay-stack
+# or
+yarn add react-overlay-stack
+```
+
+**Peer dependencies:** React 19+ and React DOM 19+.
+
+## Setup
+
+### 1. Create an overlay system
+
+Create a shared file that exports your overlay system:
+
+```ts
+// overlay-system.ts
+import { createOverlaySystem } from "react-overlay-stack";
+
+export const { useOverlay, OverlayProvider } = createOverlaySystem();
+```
+
+Each call to `createOverlaySystem()` creates an independent overlay stack with its own state. Most apps need one.
+
+### 2. Add the provider
+
+Wrap your app (or a subtree) with `OverlayProvider`:
+
+```tsx
+import { OverlayProvider } from "./overlay-system";
+
+const App = () => (
+  <OverlayProvider>
+    <YourApp />
+  </OverlayProvider>
+);
+```
+
+### 3. Define an overlay
+
+Use `defineOverlay()` to create a typed overlay component. The first generic is the props type, the second is the result type:
+
+```tsx
+import { defineOverlay } from "react-overlay-stack";
+
+const AlertDialog = defineOverlay<{ message: string }>(
+  ({ message, controller }) => (
+    <dialog open>
+      <p>{message}</p>
+      <button onClick={() => controller.close()}>OK</button>
+    </dialog>
+  ),
+);
+```
+
+### 4. Open it
+
+Use the `useOverlay` hook to get an `open` function:
+
+```tsx
+import { useOverlay } from "./overlay-system";
+
+const Page = () => {
+  const alert = useOverlay(AlertDialog);
+
+  return (
+    <button onClick={() => alert.open({ message: "Hello!" })}>
+      Show Alert
+    </button>
+  );
+};
+```
+
+### 5. Get results
+
+Pass a callback as the second argument to `open`, or use a typed result:
+
+```tsx
+const ConfirmDialog = defineOverlay<{ message: string }, boolean>(
+  ({ message, controller }) => (
+    <dialog open>
+      <p>{message}</p>
+      <button onClick={() => controller.close(true)}>Yes</button>
+      <button onClick={() => controller.close(false)}>No</button>
+    </dialog>
+  ),
+);
+
+// In your component:
+const confirm = useOverlay(ConfirmDialog);
+confirm.open({ message: "Delete item?" }, (result) => {
+  if (result) {
+    deleteItem();
+  }
+});
+```
