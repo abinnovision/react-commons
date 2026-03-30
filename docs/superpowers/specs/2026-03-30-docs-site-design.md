@@ -60,7 +60,7 @@ src/content/docs/
 │       │   ├── radix-dialog.mdx         # Radix UI integration
 │       │   ├── vaul-drawer.mdx          # Vaul integration
 │       │   └── stacking.mdx             # Overlay stacking behavior
-│       └── examples.mdx                 # Inline demos + link to Storybook
+│       └── examples.mdx                 # Live embedded examples
 │
 ├── contributing/
 │   ├── index.mdx                        # How to contribute
@@ -81,14 +81,11 @@ import { BasicOverlayDemo } from "../../../components/BasicOverlayDemo";
 <BasicOverlayDemo client:load />
 ```
 
-Demo components live in `docs/src/components/`. They are minimal, focused illustrations — not full Storybook stories. They import from workspace packages directly.
+Demo components live in `docs/src/components/`. They import from workspace packages directly.
 
-## Storybook Coexistence
+## Examples Strategy
 
-- **Docs site:** Written documentation, API reference, focused inline examples.
-- **Storybook:** Full interactive playground with controls, actions, edge case exploration.
-- **No content duplication.** Guide pages include "Open in Storybook" callouts using Starlight's `<Aside>` component, linking to the relevant story.
-- Both run during `start:dev` for local development.
+All examples are embedded directly in the docs site as live React components. No external Storybook references or links. The docs site is the single source for both documentation and interactive examples.
 
 ## GitHub Pages Deployment
 
@@ -101,7 +98,6 @@ When added later:
 
 ## Out of Scope
 
-- Storybook deployment
 - Versioned documentation
 - Internationalization (i18n)
 - Custom search configuration
