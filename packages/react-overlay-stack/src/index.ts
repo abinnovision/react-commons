@@ -7,6 +7,10 @@ export type {
 	OverlayComponent,
 	OverlayMetadata,
 } from "./types.js";
+export type {
+	OverlayProviderProps,
+	UseOverlayReturn,
+} from "./create-overlay-system.js";
 
 // Primary API
 export { createOverlaySystem } from "./create-overlay-system.js";

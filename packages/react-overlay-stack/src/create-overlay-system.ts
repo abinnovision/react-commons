@@ -29,13 +29,13 @@ type OpenFn<T extends OverlayDefinition<any, any>> = [OverlayProps<T>] extends [
 			onClose?: (result?: OverlayResult<T>) => void,
 		) => string;
 
-interface UseOverlayReturn<T extends OverlayDefinition<any, any>> {
+export interface UseOverlayReturn<T extends OverlayDefinition<any, any>> {
 	readonly open: OpenFn<T>;
 	readonly close: (id: string, result?: OverlayResult<T>) => void;
 	readonly closeAll: () => void;
 }
 
-interface OverlayProviderProps {
+export interface OverlayProviderProps {
 	readonly children: ReactNode;
 	readonly overlays?: readonly OverlayDefinition<any, any>[];
 }
