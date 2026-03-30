@@ -22,10 +22,10 @@
 	},
 	"prettier": "@abinnovision/prettier-config",
 	"dependencies": {
-		"@radix-ui/react-dialog": "^1.1.14",
+		"@radix-ui/react-dialog": "^1.1.15",
 		"@storybook/react": "^10.3.3",
-		"react": "^19.1.0",
-		"react-dom": "^19.1.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4",
 		"react-overlay-stack": "workspace:^",
 		"vaul": "^1.1.2"
 	},
@@ -42,6 +42,6 @@
 		"storybook": "^10.3.3",
 		"tailwindcss": "^4.2.2",
 		"typescript": "^5.9.3",
-		"vite": "^8.0.2"
+		"vite": "^8.0.3"
 	}
 }
