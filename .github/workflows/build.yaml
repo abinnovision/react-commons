@@ -29,6 +29,7 @@ jobs:
 
       # Package publishing (disabled by default)
       enable-package-publishing: true
+      enable-packages-registry-npm: "true"
 
       # GCP Artifact Registry configuration
       enable-apps-registry-gcpar: false
