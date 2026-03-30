@@ -1,0 +1,87 @@
+---
+title: Overlay Stacking
+description: How overlay stacking works in react-overlay-stack.
+---
+
+When multiple overlays are open at the same time, they form a stack. Each overlay knows its position and can adapt its behavior accordingly.
+
+## How It Works
+
+Every overlay rendered by `OverlayProvider` receives metadata via `useOverlayContext()`:
+
+| Property | Description |
+|----------|-------------|
+| `stackIndex` | Zero-based position. First overlay is `0`, second is `1`, etc. |
+| `isTopmost` | `true` only for the overlay at the top of the stack |
+| `isOpen` | `true` when visible, `false` when animating out |
+
+## Z-Index Management
+
+Use `stackIndex` to compute z-index so overlays layer correctly:
+
+```tsx
+const overlayZIndex = 50 + stackIndex * 10;
+const contentZIndex = overlayZIndex + 1;
+```
+
+This gives each overlay a 10-unit z-index gap, enough for overlay + content layers.
+
+## Closing Behavior
+
+The overlay system provides three ways to close overlays:
+
+```tsx
+const overlay = useOverlay(MyOverlay);
+
+// Close a specific instance by ID
+const id = overlay.open(props);
+overlay.close(id);
+
+// Close with a result
+overlay.close(id, "confirmed");
+
+// Close all overlays in this system
+overlay.closeAll();
+```
+
+## Animation Lifecycle
+
+When `close()` is called, the overlay is **not** immediately removed from the DOM. Instead:
+
+1. `isOpen` becomes `false` — trigger your exit animation
+2. When the animation finishes, call `onAnimationEnd()`
+3. The overlay is removed from the DOM and the `onClose` callback fires
+
+```tsx
+const MyOverlay = defineOverlay(({ controller }) => {
+  const { isOpen, onAnimationEnd } = useOverlayContext();
+
+  return (
+    <div
+      className="transition-opacity duration-200"
+      style={{ opacity: isOpen ? 1 : 0 }}
+      onTransitionEnd={() => {
+        if (!isOpen) onAnimationEnd();
+      }}
+    >
+      <button onClick={() => controller.close()}>Close</button>
+    </div>
+  );
+});
+```
+
+If you don't need exit animations, call `onAnimationEnd()` immediately:
+
+```tsx
+import { useEffect } from "react";
+
+const SimpleOverlay = defineOverlay(({ controller }) => {
+  const { isOpen, onAnimationEnd } = useOverlayContext();
+
+  useEffect(() => {
+    if (!isOpen) onAnimationEnd();
+  }, [isOpen, onAnimationEnd]);
+
+  return <div>...</div>;
+});
+```

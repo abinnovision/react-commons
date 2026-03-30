@@ -1,0 +1,95 @@
+---
+title: Radix UI Dialog
+description: How to integrate react-overlay-stack with Radix UI Dialog.
+---
+
+[Radix UI Dialog](https://www.radix-ui.com/primitives/docs/components/dialog) is a popular accessible dialog primitive. Here's how to wrap it as an overlay.
+
+## Creating a Modal Component
+
+Build a compound component that reads overlay metadata via `useOverlayContext()`:
+
+```tsx
+import * as Dialog from "@radix-ui/react-dialog";
+import { useOverlayContext } from "react-overlay-stack";
+import type { FC, ReactNode } from "react";
+
+interface ModalProps {
+  children: ReactNode;
+}
+
+export const Modal: FC<ModalProps> = ({ children }) => {
+  const { isOpen, stackIndex, onAnimationEnd } = useOverlayContext();
+
+  const overlayZIndex = 50 + stackIndex * 10;
+  const contentZIndex = overlayZIndex + 1;
+
+  return (
+    <Dialog.Root open={true}>
+      <Dialog.Portal>
+        <Dialog.Overlay
+          className="fixed inset-0 bg-black/50"
+          data-state={isOpen ? "open" : "closed"}
+          style={{ zIndex: overlayZIndex }}
+        />
+        <Dialog.Content
+          className="fixed left-1/2 top-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-xl"
+          data-state={isOpen ? "open" : "closed"}
+          style={{ zIndex: contentZIndex }}
+          onAnimationEnd={(event) => {
+            if (event.currentTarget === event.target && !isOpen) {
+              onAnimationEnd();
+            }
+          }}
+        >
+          {children}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
+```
+
+**Key points:**
+- `Dialog.Root` always has `open={true}` — the overlay system controls visibility, not Radix.
+- `data-state` is driven by `isOpen` from context for CSS animations.
+- `onAnimationEnd` fires after exit animation to remove the overlay from the DOM.
+- Z-index is computed from `stackIndex` so overlays stack correctly.
+
+## Defining the Overlay
+
+```tsx
+import { defineOverlay } from "react-overlay-stack";
+import { Modal } from "./Modal";
+
+const ConfirmDialog = defineOverlay<{ message: string }, boolean>(
+  ({ message, controller }) => (
+    <Modal>
+      <h2 className="text-lg font-semibold">Confirm</h2>
+      <p className="my-4 text-gray-600">{message}</p>
+      <div className="flex gap-2">
+        <button onClick={() => controller.close(true)}>Yes</button>
+        <button onClick={() => controller.close(false)}>No</button>
+      </div>
+    </Modal>
+  ),
+);
+```
+
+## Usage
+
+```tsx
+const Page = () => {
+  const confirm = useOverlay(ConfirmDialog);
+
+  const handleDelete = () => {
+    confirm.open({ message: "Delete this item?" }, (result) => {
+      if (result) {
+        deleteItem();
+      }
+    });
+  };
+
+  return <button onClick={handleDelete}>Delete</button>;
+};
+```
