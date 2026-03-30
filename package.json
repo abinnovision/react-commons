@@ -9,18 +9,18 @@
 		"url": "https://abigroup.io"
 	},
 	"workspaces": [
-		"packages/*"
+		"packages/*",
+		"examples"
 	],
 	"scripts": {
 		"build": "yarn turbo run build",
-		"check": "yarn format:check & yarn sort:check & turbo run check",
-		"clean": "rimraf -g -I 'coverage/' 'packages/*/{coverage,dist,.next,.turbo,gen,**/*.{gen,generated}.*}' 'out/'",
-		"fix": "yarn format:fix & yarn sort:fix & turbo run fix",
+		"check": "yarn format:check && turbo run check",
+		"clean": "rimraf -g -I 'coverage/' 'packages/*/{coverage,dist,.turbo}'",
+		"fix": "yarn format:fix && turbo run fix",
 		"format:check": "prettier --ignore-path .gitignore --check '{.github/**/*,*,docs/**/*}.{json{,5},md,y{,a}ml,gql}'",
 		"format:fix": "prettier --ignore-path .gitignore --write '{.github/**/*,*,docs/**/*}.{json{,5},md,y{,a}ml,gql}'",
 		"postinstall": "husky",
-		"sort:check": "sort-package-json 'packages/**!(node_modules)/package.json' 'package.json' --check",
-		"sort:fix": "sort-package-json 'packages/**!(node_modules)/package.json' 'package.json'",
+		"start:dev": "yarn turbo watch start:dev",
 		"test-unit": "vitest --run --coverage",
 		"test-unit:watch": "vitest"
 	},

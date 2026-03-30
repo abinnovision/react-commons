@@ -19,6 +19,11 @@
 			"inputs": ["src/**/*"],
 			"outputs": ["dist/**/*"]
 		},
+		"start:dev": {
+			"dependsOn": ["^build"],
+			"persistent": true,
+			"cache": false
+		},
 		"generate": {
 			"inputs": ["src/**", ".env.example"],
 			"outputs": ["gen/**", "src/**/*.generated.ts", "src/**/*.gen.ts"],
