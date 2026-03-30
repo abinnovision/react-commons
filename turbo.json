@@ -40,6 +40,16 @@
 		"test-e2e": {
 			"dependsOn": ["^build", "generate"],
 			"inputs": ["src/**/*", "test/**/*"]
+		},
+		"@internal/docs#dev": {
+			"dependsOn": ["^build"],
+			"persistent": true,
+			"cache": false
+		},
+		"@internal/docs#build": {
+			"dependsOn": ["^build"],
+			"inputs": ["src/**/*", "astro.config.ts"],
+			"outputs": ["dist/**/*"]
 		}
 	}
 }
