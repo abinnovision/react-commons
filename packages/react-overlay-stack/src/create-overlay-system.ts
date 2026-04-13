@@ -154,7 +154,12 @@ export const createOverlaySystem = () => {
 			);
 		});
 
-		return createElement(Fragment, null, children, ...stackElements);
+		return createElement(
+			Fragment,
+			null,
+			children,
+			createElement(Fragment, null, ...stackElements),
+		);
 	};
 
 	return { useOverlay, OverlayProvider } as const;
