@@ -1,6 +1,6 @@
 {
 	"name": "react-overlay-stack",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Type-safe, unstyled overlay manager for React with animation lifecycle and stacking support",
 	"author": {
 		"name": "abi group GmbH",

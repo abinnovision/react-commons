@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/abinnovision/react-commons/compare/react-overlay-stack-v1.0.0...react-overlay-stack-v1.0.1) (2026-04-13)
+
+
+### Bug Fixes
+
+* prevent children re-mount on overlay stack change ([#22](https://github.com/abinnovision/react-commons/issues/22)) ([20437d6](https://github.com/abinnovision/react-commons/commit/20437d6c802b9ea752cf23ced18ed25a6c06eb5a))
+
 ## 1.0.0 (2026-03-30)
 
 
