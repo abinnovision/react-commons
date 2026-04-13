@@ -1,4 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
+import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { useOverlayContext } from "./context.js";
@@ -498,6 +499,48 @@ describe("createOverlaySystem", () => {
 		expect(() => render(<BadComponent />)).toThrow(
 			/useOverlayContext must be used within an overlay/,
 		);
+	});
+
+	it("does not re-mount children when an overlay opens", () => {
+		const { OverlayProvider, useOverlay } = createOverlaySystem();
+		const unmountSpy = vi.fn();
+
+		const Child = () => {
+			React.useEffect(() => unmountSpy, []);
+
+			return <div data-testid="stable-child">child</div>;
+		};
+
+		const Trigger = () => {
+			const overlay = useOverlay(TestOverlay);
+
+			return (
+				<button
+					data-testid="open-remount-test"
+					onClick={() => {
+						overlay.open({ title: "Hello" });
+					}}
+				>
+					Open
+				</button>
+			);
+		};
+
+		render(
+			<OverlayProvider>
+				<Child />
+				<Trigger />
+			</OverlayProvider>,
+		);
+
+		expect(screen.getByTestId("stable-child").textContent).toBe("child");
+		expect(unmountSpy).not.toHaveBeenCalled();
+
+		act(() => {
+			screen.getByTestId("open-remount-test").click();
+		});
+
+		expect(unmountSpy).not.toHaveBeenCalled();
 	});
 
 	// Type-level tests (compile-time checks — if the file compiles, they pass)
