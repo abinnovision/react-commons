@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/abinnovision/react-commons/compare/react-overlay-stack-v1.0.1...react-overlay-stack-v1.0.2) (2026-05-12)
+
+
+### Bug Fixes
+
+* **react-overlay-stack:** add missing keywords and repository fields ([#35](https://github.com/abinnovision/react-commons/issues/35)) ([1427912](https://github.com/abinnovision/react-commons/commit/14279120c90e9ba27b3742b238d52b42a21fe6c6))
+
 ## [1.0.1](https://github.com/abinnovision/react-commons/compare/react-overlay-stack-v1.0.0...react-overlay-stack-v1.0.1) (2026-04-13)
 
 
