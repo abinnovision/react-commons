@@ -1,6 +1,6 @@
 {
 	"name": "react-overlay-stack",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Type-safe, unstyled overlay manager for React with animation lifecycle and stacking support",
 	"keywords": [
 		"react",
