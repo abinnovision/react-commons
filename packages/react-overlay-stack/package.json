@@ -2,12 +2,27 @@
 	"name": "react-overlay-stack",
 	"version": "1.0.1",
 	"description": "Type-safe, unstyled overlay manager for React with animation lifecycle and stacking support",
+	"keywords": [
+		"react",
+		"overlay",
+		"modal",
+		"dialog",
+		"stack",
+		"typescript",
+		"headless",
+		"animation"
+	],
 	"author": {
 		"name": "abi group GmbH",
 		"email": "info@abigroup.io",
 		"url": "https://abigroup.io"
 	},
 	"license": "Apache-2.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/abinnovision/react-commons",
+		"directory": "packages/react-overlay-stack"
+	},
 	"type": "module",
 	"exports": {
 		".": {
