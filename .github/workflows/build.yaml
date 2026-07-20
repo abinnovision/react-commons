@@ -19,8 +19,6 @@ jobs:
   build-stack:
     name: CI/CD Pipeline
     uses: abinnovision/actions/.github/workflows/workflow.yaml@polyglot-monorepo-stack-v1
-    secrets:
-      GH_APP_IDENTIFICATION_RELEASER: ${{ secrets.GH_APP_IDENTIFICATION_RELEASER }}
     with:
       prerelease-channel: "beta"
 
