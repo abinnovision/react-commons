@@ -5,12 +5,12 @@ __metadata:
   version: 8
   cacheKey: 10
 
-"@abinnovision/commitlint-config@npm:^2.2.4":
-  version: 2.2.4
-  resolution: "@abinnovision/commitlint-config@npm:2.2.4"
+"@abinnovision/commitlint-config@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@abinnovision/commitlint-config@npm:2.3.0"
   dependencies:
     "@commitlint/config-conventional": "npm:^20.4.1"
-  checksum: 10/e777b4a08240eb98fa7f7822e37e2479c9bfeed98a0e49b0373e2e2a94047999b69d8cf5ba8cb1ff90d1d512b089966c1e14d61fa2f2e5b656db7caea462816c
+  checksum: 10/78fd7783d9859ecca3f896dbaba1b319739417207ab747a27507a3cd942b57397fbb4ae50698378956f7eb10304fa8b979298e84a427efdfa6f2ecc28c5bb468
   languageName: node
   linkType: hard
 
@@ -1038,7 +1038,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@internal/root@workspace:."
   dependencies:
-    "@abinnovision/commitlint-config": "npm:^2.2.4"
+    "@abinnovision/commitlint-config": "npm:^2.3.0"
     "@abinnovision/prettier-config": "npm:^2.1.5"
     "@commitlint/cli": "npm:^20.5.0"
     "@vitest/coverage-v8": "npm:^4.1.2"
