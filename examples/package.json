@@ -33,7 +33,7 @@
 		"@abinnovision/eslint-config-base": "^3.2.2",
 		"@abinnovision/eslint-config-react": "^3.1.0",
 		"@abinnovision/prettier-config": "^2.1.5",
-		"@storybook/react-vite": "^10.3.3",
+		"@storybook/react-vite": "^10.4.0",
 		"@tailwindcss/vite": "^4.2.2",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
