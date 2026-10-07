@@ -1,7 +1,7 @@
 name: PR Utils
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
     types:
@@ -10,22 +10,21 @@ on:
       - synchronize
 
 jobs:
-  commitlint:
-    name: Commitlint
+  lint-commits:
+    name: Lint commits
     runs-on: ubuntu-latest
     timeout-minutes: 4
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-      - name: Setup Node.js
-        uses: abinnovision/actions@setup-node-v1
-      - name: Install dependencies
-        run: yarn install --immutable
       - name: Run Commitlint
         uses: abinnovision/actions@run-commitlint-v1
-        with:
-          from: ${{ github.event.pull_request.base.sha }}
-          to: ${{ github.event.pull_request.head.sha }}
+
+  dependabot:
+    name: Dependabot automations
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: abinnovision/actions@triage-dependabot-pr-v1
