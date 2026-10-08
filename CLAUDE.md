@@ -70,6 +70,7 @@ Commits must follow conventional commit format (enforced by commitlint via commi
 
 ## CI/CD
 
-- Polyglot monorepo stack v1 (`abinnovision/actions`)
+- CI: `app-stack-v1` and `publish-npm-v1` from `abinnovision/actions` (`.github/workflows/build.yaml`)
+- Required checks: `CI / Status` and `Lint commits`
 - Prerelease channel: `beta`
 - Package publishing enabled
