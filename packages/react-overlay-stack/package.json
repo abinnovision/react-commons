@@ -84,7 +84,7 @@
 		"react-dom": "^19.2.4",
 		"tsdown": "^0.21.7",
 		"typescript": "^5.9.3",
-		"vitest": "^4.1.2"
+		"vitest": "^4.1.11"
 	},
 	"peerDependencies": {
 		"react": "^19.0.0",
